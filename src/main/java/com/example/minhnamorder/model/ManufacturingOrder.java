@@ -2,6 +2,7 @@ package com.example.minhnamorder.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,8 +15,6 @@ import java.util.Set;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "manufacturing_order")
@@ -47,4 +46,18 @@ public class ManufacturingOrder {
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "code"))
     private List<Product> productList = new ArrayList<>();
+
+    public ManufacturingOrder() {
+    }
+
+    @Builder
+    public ManufacturingOrder(Long id, Timestamp date, String clientName, Timestamp deliverDate, Timestamp dateStart, Timestamp dateExpect, List<Product> productList) {
+        this.id = id;
+        this.date = date;
+        this.clientName = clientName;
+        this.deliverDate = deliverDate;
+        this.dateStart = dateStart;
+        this.dateExpect = dateExpect;
+        this.productList = productList;
+    }
 }
