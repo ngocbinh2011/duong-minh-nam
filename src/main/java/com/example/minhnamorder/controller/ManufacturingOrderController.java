@@ -1,11 +1,9 @@
 package com.example.minhnamorder.controller;
 
-import com.example.minhnamorder.model.ManufacturingOrder;
-import com.example.minhnamorder.model.OrderDto;
-import com.example.minhnamorder.model.OrderQuantity;
-import com.example.minhnamorder.model.ProductOrderDto;
+import com.example.minhnamorder.model.*;
 import com.example.minhnamorder.repository.ManufracturingOrderRepository;
 import com.example.minhnamorder.repository.OrderQuantityRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -77,5 +75,27 @@ public class ManufacturingOrderController {
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id){
         manufracturingOrderRepository.deleteById(id);
         return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping(value = "/order/bill/{id}")
+    public ResponseEntity<?> getBill(@PathVariable(value = "id") Long id) {
+        ManufacturingOrder order = manufracturingOrderRepository.findById(id).orElse(null);
+
+        OrderDto orderDto = toOrderDTO(order);
+
+        Output output = new Output(orderDto.getProductList());
+        return ResponseEntity.ok(output);
+    }
+
+    @Data
+    static class Output{
+        List<ProductOrderDto> productOrders;
+        float total;
+
+        public Output(List<ProductOrderDto> productOrders) {
+            this.productOrders = productOrders;
+            total = 0;
+            productOrders.stream().forEach(order -> total += order.getTotal());
+        }
     }
 }
