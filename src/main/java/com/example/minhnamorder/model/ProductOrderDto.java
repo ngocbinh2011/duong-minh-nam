@@ -19,6 +19,7 @@ public class ProductOrderDto{
     private String name;
     private String description;
     private String category;
+    private String unit;
     private float cost;
 
     @JsonProperty("qty")
@@ -34,6 +35,7 @@ public class ProductOrderDto{
                 .category(product.getCategory())
                 .cost(product.getCost())
                 .quantity(quantity)
+                .unit(product.getUnit())
                 .total(quantity * product.getCost())
                 .build();
     }
@@ -44,6 +46,7 @@ public class ProductOrderDto{
                 .name(name)
                 .description(description)
                 .category(category)
+                .unit(unit)
                 .cost(cost)
                 .build();
     }

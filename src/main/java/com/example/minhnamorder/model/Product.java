@@ -29,6 +29,9 @@ public class Product {
     @Column(name = "category")
     private String category;
 
+    @Column(name = "unit")
+    private String unit;
+
     @Column(name = "cost")
     private float cost;
 
@@ -40,11 +43,13 @@ public class Product {
     }
 
     @Builder
-    public Product(String code, String name, String description, String category, float cost, List<ManufacturingOrder> orders) {
+
+    public Product(String code, String name, String description, String category, String unit, float cost, List<ManufacturingOrder> orders) {
         this.code = code;
         this.name = name;
         this.description = description;
         this.category = category;
+        this.unit = unit;
         this.cost = cost;
         this.orders = orders;
     }
